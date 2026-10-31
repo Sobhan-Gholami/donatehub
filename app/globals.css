@@ -1,0 +1,179 @@
+@import "tailwindcss";
+
+:root {
+  --void: #0a0a14;
+  --panel: #14141f;
+  --panel-raised: #1c1c2c;
+  --line: #2a2a3d;
+  --line-bright: #3a3a52;
+  --signal: #ff3d71;
+  --signal-soft: #ff6b9d;
+  --gold: #f2b84b;
+  --gold-soft: #ffd88a;
+  --text: #f3f1fa;
+  --muted: #9490ac;
+  --muted-dim: #6b6880;
+
+  --font-display: "Vazirmatn", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+}
+
+@theme inline {
+  --color-void: var(--void);
+  --color-panel: var(--panel);
+}
+
+* {
+  border-color: var(--line);
+}
+
+html, body {
+  background: var(--void);
+  color: var(--text);
+}
+
+body {
+  font-family: var(--font-display);
+  background-image:
+    radial-gradient(ellipse 900px 500px at 15% -10%, rgba(255, 61, 113, 0.10), transparent),
+    radial-gradient(ellipse 700px 500px at 100% 10%, rgba(242, 184, 75, 0.07), transparent);
+  background-attachment: fixed;
+}
+
+::selection {
+  background: var(--signal);
+  color: var(--void);
+}
+
+/* ---- Design system utilities ---- */
+
+.panel {
+  background: linear-gradient(180deg, var(--panel), var(--panel) 60%, var(--panel-raised));
+  border: 1px solid var(--line);
+  border-radius: 1rem;
+}
+
+.panel-hover {
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+.panel-hover:hover {
+  border-color: var(--line-bright);
+  box-shadow: 0 0 0 1px var(--line-bright), 0 8px 30px -12px rgba(255, 61, 113, 0.25);
+}
+
+.field {
+  background: var(--panel-raised);
+  border: 1px solid var(--line);
+  border-radius: 0.65rem;
+  color: var(--text);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.field:focus {
+  outline: none;
+  border-color: var(--signal);
+  box-shadow: 0 0 0 3px rgba(255, 61, 113, 0.18);
+}
+.field::placeholder {
+  color: var(--muted-dim);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--signal), var(--signal-soft));
+  color: #1a0510;
+  font-weight: 700;
+  border-radius: 0.65rem;
+  transition: filter 0.15s ease, transform 0.15s ease;
+  box-shadow: 0 6px 20px -8px rgba(255, 61, 113, 0.55);
+}
+.btn-primary:hover { filter: brightness(1.08); transform: translateY(-1px); }
+.btn-primary:active { transform: translateY(0); }
+.btn-primary:disabled { opacity: 0.45; filter: none; transform: none; }
+
+.btn-gold {
+  background: linear-gradient(135deg, var(--gold), var(--gold-soft));
+  color: #241505;
+  font-weight: 700;
+  border-radius: 0.65rem;
+  box-shadow: 0 6px 20px -8px rgba(242, 184, 75, 0.5);
+}
+
+.btn-secondary {
+  background: var(--panel-raised);
+  border: 1px solid var(--line);
+  color: var(--text);
+  border-radius: 0.65rem;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+.btn-secondary:hover { border-color: var(--line-bright); background: #22222f; }
+
+.text-muted { color: var(--muted); }
+.text-muted-dim { color: var(--muted-dim); }
+.text-signal { color: var(--signal); }
+.text-gold { color: var(--gold); }
+
+.amount {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, var(--signal), var(--gold));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.on-air-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--signal);
+  box-shadow: 0 0 10px var(--signal);
+  animation: pulse-dot 1.7s ease-in-out infinite;
+  flex-shrink: 0;
+}
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.45; transform: scale(0.85); }
+}
+
+.signal-bar {
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--signal), var(--gold), var(--signal));
+  background-size: 200% 100%;
+  animation: signal-shimmer 3.5s linear infinite;
+}
+@keyframes signal-shimmer {
+  to { background-position: -200% 0; }
+}
+
+.progress-track {
+  background: var(--panel-raised);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  overflow: hidden;
+}
+.progress-fill {
+  background: linear-gradient(90deg, var(--signal), var(--gold));
+  box-shadow: 0 0 12px rgba(255, 61, 113, 0.5);
+  transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.chip {
+  border-radius: 0.55rem;
+  border: 1px solid var(--line);
+  color: var(--muted);
+  transition: all 0.15s ease;
+}
+.chip[data-active="true"] {
+  background: linear-gradient(135deg, var(--signal), var(--signal-soft));
+  color: #1a0510;
+  border-color: transparent;
+  font-weight: 600;
+}
+.chip:not([data-active="true"]):hover {
+  border-color: var(--line-bright);
+  color: var(--text);
+}
